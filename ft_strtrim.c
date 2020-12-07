@@ -61,7 +61,6 @@ int				get_lenght(char const *s1, char const *set)
 		b++;
 	}
 	return (dest_len + 1);
-
 }
 
 char			*ft_strtrim(char const *s1, char const *set)

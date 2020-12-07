@@ -80,9 +80,9 @@ char	**ft_split(char const *s, char c)
 	word_len = 0;
 	if (!s)
 		return (NULL);
-	if(!(tab = malloc(sizeof(char*) * word_counter(s, c) + 1)))
+	if (!(tab = malloc(sizeof(char*) * word_counter(s, c) + 1)))
 		return (NULL);
-	if(splitter(s, c, tab, word_len))
+	if (splitter(s, c, tab, word_len))
 		return (tab);
 	return (NULL);
 }
