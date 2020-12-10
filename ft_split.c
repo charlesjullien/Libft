@@ -6,83 +6,76 @@
 /*   By: cjullien <cjullien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 19:54:13 by cjullien          #+#    #+#             */
-/*   Updated: 2020/12/07 19:33:17 by cjullien         ###   ########.fr       */
+/*   Updated: 2020/12/10 16:13:08 by cjullien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_free(char **tab, int k)
+int				free_split(char **tab, unsigned int j)
 {
-	while (--k >= 0)
-		free(tab[k]);
+	while (--j >= 0)
+		free((tab)[j]);
 	free(tab);
 	return (0);
 }
 
-int		word_counter(char const *s, char c)
+unsigned int	get_nbr_words(char const *s, char c)
 {
-	int		counter;
-	int		i;
-	int		word;
+	unsigned int	i;
+	unsigned int	nbr_words;
 
-	counter = 0;
 	i = 0;
-	word = 0;
+	nbr_words = 0;
 	while (s[i])
 	{
-		if (s[i] == c)
-		{
-			word = 0;
-		}
-		else if (word == 0)
-		{
-			word = 1;
-			counter++;
-		}
-		i++;
+		while (s[i] == c)
+			i++;
+		if (s[i])
+			nbr_words++;
+		while (s[i] != c && s[i])
+			i++;
 	}
-	return (counter);
+	return (nbr_words);
 }
 
-int		splitter(char const *s, char c, char **tab, int word_len)
+int				splitter(char **tab, char const *s, char c, unsigned int n)
 {
-	int	k;
-	int	l;
-	int j;
+	unsigned int	i;
+	unsigned int	j;
+	unsigned int	wordlen;
 
-	k = 0;
+	i = 0;
 	j = 0;
-	while (k < word_counter(s, c))
+	while (j < n)
 	{
-		word_len = 0;
-		while (s[j] && s[j] == c)
-			j++;
-		while (s[j++] && s[j] != c)
-			word_len++;
-		if (!(tab[k] = malloc(sizeof(char) * word_len + 1)))
-			return (ft_free(tab, k));
-		l = -1;
-		while (++l <= word_len)
-			tab[k][l] = s[l + j - word_len - 1];
-		tab[k][l] = '\0';
-		k++;
+		wordlen = 0;
+		while (s[i] && s[i] == c)
+			i++;
+		while (s[i] && s[i] != c)
+		{
+			i++;
+			wordlen++;
+		}
+		if ((tab[j] = ft_substr(s, (i - wordlen), wordlen)) == NULL)
+			return (free_split(tab, j));
+		j++;
 	}
-	tab[k] = NULL;
+	tab[j] = NULL;
 	return (1);
 }
 
-char	**ft_split(char const *s, char c)
+char			**ft_split(char const *s, char c)
 {
-	char	**tab;
-	int		word_len;
+	char			**tab;
+	unsigned int	nbr_words;
 
-	word_len = 0;
 	if (!s)
 		return (NULL);
-	if (!(tab = malloc(sizeof(char*) * word_counter(s, c) + 1)))
+	nbr_words = get_nbr_words(s, c);
+	if ((tab = (char **)malloc(sizeof(char *) * (nbr_words + 1))) == NULL)
 		return (NULL);
-	if (splitter(s, c, tab, word_len))
+	if (splitter(tab, s, c, nbr_words))
 		return (tab);
 	return (NULL);
 }
