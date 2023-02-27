@@ -6,7 +6,7 @@
 /*   By: cjullien <cjullien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 19:54:13 by cjullien          #+#    #+#             */
-/*   Updated: 2020/12/10 20:14:32 by cjullien         ###   ########.fr       */
+/*   Updated: 2020/12/07 19:33:17 by cjullien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int				free_split(char **tab, unsigned int j)
 {
-	int	x;
+	int		x;
 
 	x = (int)j;
 	while (--x >= 0)
